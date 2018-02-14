@@ -23,4 +23,15 @@
 
 ## DB設計
 - report
+  - id
+  - user_id
+  - text
+  - created_at
+  - is_sent
 - user
+  - id
+  - first_name
+  - last_name
+  - email
+  - password
+  - picture
