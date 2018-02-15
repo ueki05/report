@@ -1,0 +1,16 @@
+User:
+  actAs: { Timestampable: ~ }
+    first_name:   { type: string(255), notnull: true }
+    last_name:    { type: string(255), notnull: true }
+    email:        { type: string(255), notnull: true }
+    # password
+    # picture
+
+Report:
+  actAs: { Timestampable: ~ }
+  columns:
+    user_id:      { type: integer, notnull: true }
+    body:         { type: string(2048), notnull: true }
+    is_sent:      { type: boolean, notnull: true, default: 0 }
+  relations:
+    User: { onDelete: CASCADE, local: user_id, foreign: id, foreignAlias: User }
