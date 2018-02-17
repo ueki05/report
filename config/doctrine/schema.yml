@@ -1,5 +1,6 @@
 User:
   actAs: { Timestampable: ~ }
+  columns:
     first_name:   { type: string(255), notnull: true }
     last_name:    { type: string(255), notnull: true }
     email:        { type: string(255), notnull: true }
