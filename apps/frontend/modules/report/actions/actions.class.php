@@ -25,7 +25,10 @@ class reportActions extends sfActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new ReportForm();
+    $report = new Report();
+    $report->setTargetDate(date('Y-m-d'));
+
+    $this->form = new ReportForm($report);
   }
 
   public function executeCreate(sfWebRequest $request)
