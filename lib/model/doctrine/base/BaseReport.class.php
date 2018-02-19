@@ -8,16 +8,19 @@
  * @property integer $user_id
  * @property string $body
  * @property boolean $is_sent
+ * @property date $target_date
  * @property User $User
  * 
- * @method integer getUserId()  Returns the current record's "user_id" value
- * @method string  getBody()    Returns the current record's "body" value
- * @method boolean getIsSent()  Returns the current record's "is_sent" value
- * @method User    getUser()    Returns the current record's "User" value
- * @method Report  setUserId()  Sets the current record's "user_id" value
- * @method Report  setBody()    Sets the current record's "body" value
- * @method Report  setIsSent()  Sets the current record's "is_sent" value
- * @method Report  setUser()    Sets the current record's "User" value
+ * @method integer getUserId()      Returns the current record's "user_id" value
+ * @method string  getBody()        Returns the current record's "body" value
+ * @method boolean getIsSent()      Returns the current record's "is_sent" value
+ * @method date    getTargetDate()  Returns the current record's "target_date" value
+ * @method User    getUser()        Returns the current record's "User" value
+ * @method Report  setUserId()      Sets the current record's "user_id" value
+ * @method Report  setBody()        Sets the current record's "body" value
+ * @method Report  setIsSent()      Sets the current record's "is_sent" value
+ * @method Report  setTargetDate()  Sets the current record's "target_date" value
+ * @method Report  setUser()        Sets the current record's "User" value
  * 
  * @package    report
  * @subpackage model
@@ -42,6 +45,10 @@ abstract class BaseReport extends sfDoctrineRecord
              'type' => 'boolean',
              'notnull' => true,
              'default' => 0,
+             ));
+        $this->hasColumn('target_date', 'date', null, array(
+             'type' => 'date',
+             'notnull' => true,
              ));
     }
 

@@ -15,21 +15,23 @@ abstract class BaseReportForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'         => new sfWidgetFormInputHidden(),
-      'user_id'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('User'), 'add_empty' => false)),
-      'body'       => new sfWidgetFormTextarea(),
-      'is_sent'    => new sfWidgetFormInputCheckbox(),
-      'created_at' => new sfWidgetFormDateTime(),
-      'updated_at' => new sfWidgetFormDateTime(),
+      'id'          => new sfWidgetFormInputHidden(),
+      'user_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('User'), 'add_empty' => false)),
+      'body'        => new sfWidgetFormTextarea(),
+      'is_sent'     => new sfWidgetFormInputCheckbox(),
+      'target_date' => new sfWidgetFormDate(),
+      'created_at'  => new sfWidgetFormDateTime(),
+      'updated_at'  => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
-      'id'         => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'user_id'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('User'))),
-      'body'       => new sfValidatorString(array('max_length' => 2048)),
-      'is_sent'    => new sfValidatorBoolean(array('required' => false)),
-      'created_at' => new sfValidatorDateTime(),
-      'updated_at' => new sfValidatorDateTime(),
+      'id'          => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'user_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('User'))),
+      'body'        => new sfValidatorString(array('max_length' => 2048)),
+      'is_sent'     => new sfValidatorBoolean(array('required' => false)),
+      'target_date' => new sfValidatorDate(),
+      'created_at'  => new sfValidatorDateTime(),
+      'updated_at'  => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('report[%s]');

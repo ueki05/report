@@ -13,5 +13,6 @@ Report:
     user_id:      { type: integer, notnull: true }
     body:         { type: string(2048), notnull: true }
     is_sent:      { type: boolean, notnull: true, default: 0 }
+    target_date:  { type: date, notnull: true }
   relations:
     User: { onDelete: CASCADE, local: user_id, foreign: id, foreignAlias: User }
