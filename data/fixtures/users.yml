@@ -2,4 +2,12 @@ User:
   ueki:
     first_name: yuta
     last_name:  ueki
-    email:      ueki.yuta@a-tm.co.jp
+    email:      yuta.ueki@example.com
+  hoge:
+    first_name: hoge
+    last_name:  hoge
+    email:      hoge.hoge@example.com
+  fuga:
+    first_name: fuga
+    last_name:  fuga
+    email:      fuga.fuga@example.com

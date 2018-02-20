@@ -26,13 +26,22 @@ class ReportForm extends BaseReportForm
     $this->setWidgets(array(
       'target_date' => new sfWidgetFormDate(array(
         'format' => '%year% 年 %month% 月 %day%',
+        'label' => '対象日',
       )),
-      'user_id'     => new sfWidgetFormInput(array(
+      'user_id' => new sfWidgetFormDoctrineChoice(array(
+        'label' => '入力者',
+        'model' => 'User',
       )),
-      'body'        => new sfWidgetFormTextarea(array(
+      'body' => new sfWidgetFormTextarea(array(
+        'label' => '本文',
+      ), array(
+        'rows' => '40',
+        'cols' => '70',
       )),
     ));
 
-
+    $this->setValidator('user_id', new sfValidatorDoctrineChoice(array(
+      'model'  => 'User',
+    )));
   }
 }
