@@ -71,6 +71,7 @@ class reportActions extends sfActions
 
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
+    // ここでWarning、array_key_exists(): The first argument should be either a string or an integer
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
