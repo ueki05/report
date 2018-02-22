@@ -29,6 +29,7 @@ class reportActions extends sfActions
     $report->setTargetDate(date('Y-m-d'));
 
     $this->form = new ReportForm($report);
+
   }
 
   public function executeCreate(sfWebRequest $request)
