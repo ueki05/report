@@ -15,6 +15,9 @@ class reportActions extends sfActions
     $this->reports = Doctrine_Core::getTable('Report')
       ->createQuery('a')
       ->execute();
+
+    $report = new Report();
+    $this->form = new ReportForm($report);
   }
 
   public function executeShow(sfWebRequest $request)

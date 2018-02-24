@@ -1,5 +1,7 @@
 <h1>Reports List</h1>
 
+<?php include_partial('form', array('form' => $form)) ?>
+
 <table>
   <thead>
     <tr>
