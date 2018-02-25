@@ -17,6 +17,7 @@ class reportActions extends sfActions
       ->execute();
 
     $report = new Report();
+    $report->setTargetDate(date('Y-m-d'));
     $this->form = new ReportForm($report);
   }
 
