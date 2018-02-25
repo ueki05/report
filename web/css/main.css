@@ -1,0 +1,9 @@
+div#content {
+  width: 80%;
+  margin: 0 auto;
+}
+
+div#header {
+  border-bottom: double 5px #D00;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,10 @@
+div#content-left {
+  float: left;
+  width: 50%;
+}
+
+div#content-right {
+  float: left;
+  width: 50%;
+}
+

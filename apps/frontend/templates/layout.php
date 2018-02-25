@@ -13,7 +13,9 @@
         <div class="content">
           <h1><a href="<?php echo url_for('report/index') ?>">report</a></h1>
         </div>
+      </div>
 
+      <div id="content">
         <div class="content">
           <?php echo $sf_content ?>
         </div>
