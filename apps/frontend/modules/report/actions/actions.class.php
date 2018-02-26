@@ -13,12 +13,16 @@ class reportActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->reports = Doctrine_Core::getTable('Report')
-      ->createQuery('a')
+      ->createQuery('r')
       ->execute();
 
     $report = new Report();
     $report->setTargetDate(date('Y-m-d'));
     $this->form = new ReportForm($report);
+
+    $this->users = Doctrine_Core::getTable('User')
+      ->createQuery('u')
+      ->execute();
   }
 
   public function executeShow(sfWebRequest $request)

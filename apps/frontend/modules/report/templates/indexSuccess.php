@@ -6,6 +6,28 @@
   <table>
     <thead>
       <tr>
+        <th>順位</th>
+        <th>入力者</th>
+        <th>登録時間</th>
+        <th>送信</th>
+        <th>内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php $i = 0 ?>
+      <?php foreach ($users as $user): ?>
+      <?php $i++ ?>
+      <tr>
+        <td><?php echo $i ?></td>
+        <td><?php echo $user->getLastName() . "." . $user->getFirstName() ?></td>
+      </tr>
+      <?php endforeach; ?>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+      <tr>
         <th>Id</th>
         <th>User</th>
         <th>Body</th>
