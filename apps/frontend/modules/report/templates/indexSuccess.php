@@ -2,8 +2,8 @@
   <?php include_partial('form', array('form' => $form)) ?>
 </div>
 
-<div id="content-rignt">
-  <table>
+<div id="content-right">
+  <table id="reports">
     <thead>
       <tr>
         <th>順位</th>
@@ -15,41 +15,16 @@
     </thead>
     <tbody>
       <?php $i = 0 ?>
-      <?php foreach ($users as $user): ?>
+      <?php foreach ($reports as $report): ?>
       <?php $i++ ?>
       <tr>
         <td><?php echo $i ?></td>
-        <td><?php echo $user->getLastName() . "." . $user->getFirstName() ?></td>
-      </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>User</th>
-        <th>Body</th>
-        <th>Is sent</th>
-        <th>Created at</th>
-        <th>Updated at</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php $i = 0; ?>
-      <?php foreach ($reports as $report): ?>
-      <?php   $i++ ?>
-      <tr>
-        <td><?php echo $i ?></td>
-        <td><?php echo $report->getUserId() ?></td>
-        <td><?php echo $report->getBody() ?></td>
+        <td><?php echo $report->getUser()->getLastName() . "." . $report->getUser()->getFirstName() ?></td>
+        <td><?php echo date_format(date_create($report->getUpdatedAt()), 'H:i:s') ?></td>
         <td><?php echo $report->getIsSent() ?></td>
-        <td><?php echo $report->getCreatedAt() ?></td>
-        <td><?php echo $report->getUpdatedAt() ?></td>
+        <td><?php echo $report->getBody() ?></td>
       </tr>
       <?php endforeach; ?>
     </tbody>
   </table>
-  <a href="<?php echo url_for('report/new') ?>">New</a>
 <div>

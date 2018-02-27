@@ -14,15 +14,12 @@ class reportActions extends sfActions
   {
     $this->reports = Doctrine_Core::getTable('Report')
       ->createQuery('r')
+      ->innerJoin('r.User u')
       ->execute();
 
     $report = new Report();
     $report->setTargetDate(date('Y-m-d'));
     $this->form = new ReportForm($report);
-
-    $this->users = Doctrine_Core::getTable('User')
-      ->createQuery('u')
-      ->execute();
   }
 
   public function executeShow(sfWebRequest $request)
