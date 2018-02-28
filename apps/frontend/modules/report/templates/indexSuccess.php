@@ -20,7 +20,7 @@
       <tr>
         <td><?php echo $i ?></td>
         <td><?php echo $report->getUser()->getLastName() . "." . $report->getUser()->getFirstName() ?></td>
-        <td><?php echo date_format(date_create($report->getUpdatedAt()), 'H:i:s') ?></td>
+        <td><?php echo date_format(date_create($report->getUpdatedAt()), 'H:i:s') ?><?php echo link_to('修正', 'report_edit', array('id' => $report->getId())) ?></td>
         <td><?php echo $report->getIsSent() ?></td>
         <td><?php echo $report->getBody() ?></td>
       </tr>
