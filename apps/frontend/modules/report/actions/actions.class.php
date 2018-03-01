@@ -15,6 +15,8 @@ class reportActions extends sfActions
     $this->reports = Doctrine_Core::getTable('Report')
       ->createQuery('r')
       ->innerJoin('r.User u')
+      ->where('r.updated_at BETWEEN ? AND ?',
+        array(date('Y-m-d 00:00:00', time()), date('Y-m-d 23:59:59', time())))
       ->execute();
 
     $report = new Report();
