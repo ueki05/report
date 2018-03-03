@@ -15,14 +15,14 @@
     </thead>
     <tbody>
       <?php $i = 0 ?>
-      <?php foreach ($reports as $report): ?>
+      <?php foreach ($showReports as $showReport): ?>
       <?php $i++ ?>
       <tr>
         <td><?php echo $i ?></td>
-        <td><?php echo $report->getUser()->getLastName() . "." . $report->getUser()->getFirstName() ?></td>
-        <td><?php echo date_format(date_create($report->getUpdatedAt()), 'H:i:s') ?><?php echo link_to('修正', 'report_edit', array('id' => $report->getId())) ?></td>
-        <td><?php echo $report->getIsSent() ?></td>
-        <td><?php echo $report->getBody() ?></td>
+        <td><?php echo $showReport['user']->getLastName() . "." . $showReport['user']->getFirstName() ?></td>
+        <td><?php echo isset($showReport['report']) ? date('H:i:s', strtotime($showReport['report']->getUpdatedAt())) : "" ?></td>
+        <td><?php echo isset($showReport['report']) && $showReport['report']->getIsSent() == 1 ? "済" : "未" ?></td>
+        <td><?php echo isset($showReport['report']) ? $showReport['report']->getBody() : "" ?></td>
       </tr>
       <?php endforeach; ?>
     </tbody>

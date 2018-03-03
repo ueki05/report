@@ -17,7 +17,26 @@ class reportActions extends sfActions
       ->innerJoin('r.User u')
       ->where('r.updated_at BETWEEN ? AND ?',
         array(date('Y-m-d 00:00:00', time()), date('Y-m-d 23:59:59', time())))
+        ->execute();
+
+    $this->users = Doctrine_Core::getTable('User')
+      ->createQuery('u')
       ->execute();
+
+    $showReports = array();
+
+    foreach ($this->users as $user) {
+      $showReports[$user->getId()]['user'] = $user;
+    }
+
+    foreach ($this->reports as $report) {
+      foreach ($showReports as $showReport) {
+        if ($report->getUserId() == $showReport['user']->getId()) {
+          $showReports[$report->getUserId()]['report'] = $report;
+        }
+      }
+    }
+    $this->showReports = $showReports;
 
     $report = new Report();
     $report->setTargetDate(date('Y-m-d'));
