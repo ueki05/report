@@ -12,6 +12,9 @@ class reportActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
+    // authを実装していないので、一旦user_idを2とする
+    $loginUserId = 2;
+
     $this->reports = Doctrine_Core::getTable('Report')
       ->createQuery('r')
       ->innerJoin('r.User u')
@@ -40,6 +43,13 @@ class reportActions extends sfActions
 
     $report = new Report();
     $report->setTargetDate(date('Y-m-d'));
+
+    $report = Doctrine_Core::getTable('Report')
+      ->createQuery('r2')
+      ->where('r2.user_id = ?', $loginUserId)
+      ->orderBy('r2.updated_at DESC')
+      ->fetchOne();
+
     $this->form = new ReportForm($report);
   }
 
