@@ -15,11 +15,23 @@ class reportActions extends sfActions
     // authを実装していないので、一旦user_idを2とする
     $loginUserId = 2;
 
+    if (isset($_GET['target_date'])) {
+      $targetDate = date('Ymd', strtotime($_GET['target_date']));
+    } else {
+      $targetDate = date('Ymd');
+    }
+
+    $this->targetDate = date('Y年m月d日', strtotime($targetDate));
+    $this->prev = date('Ymd', strtotime($targetDate . ' - 1day'));
+    if ($targetDate != date('Ymd', time())) {
+      $this->next = date('Ymd', strtotime($targetDate . ' + 1day'));
+    }
+
     $this->reports = Doctrine_Core::getTable('Report')
       ->createQuery('r')
       ->innerJoin('r.User u')
       ->where('r.updated_at BETWEEN ? AND ?',
-        array(date('Y-m-d 00:00:00', time()), date('Y-m-d 23:59:59', time())))
+        array(date('Y-m-d 00:00:00', strtotime($targetDate)), date('Y-m-d 23:59:59', strtotime($targetDate))))
         ->execute();
 
     $this->users = Doctrine_Core::getTable('User')

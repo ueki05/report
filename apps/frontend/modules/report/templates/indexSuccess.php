@@ -3,6 +3,7 @@
 </div>
 
 <div id="content-right">
+<p><?php echo $targetDate . '分' ?> <?php echo link_to('<前日', 'report/index', array('query_string' => 'target_date=' . $prev)) ?> <?php echo isset($next) ? link_to('翌日>', 'report/index', array('query_string' => 'target_date=' . $next)) : "" ?></p>
   <table id="reports">
     <thead>
       <tr>
@@ -18,7 +19,7 @@
       <?php foreach ($showReports as $showReport): ?>
       <?php $i++ ?>
       <tr>
-        <td><?php echo $i ?></td>
+        <td><?php echo isset($showReport['report']) ? $i : "未" ?></td>
         <td><?php echo $showReport['user']->getLastName() . "." . $showReport['user']->getFirstName() ?></td>
         <td><?php echo isset($showReport['report']) ? date('H:i:s', strtotime($showReport['report']->getUpdatedAt())) : "" ?></td>
         <td><?php echo isset($showReport['report']) && $showReport['report']->getIsSent() == 1 ? "済" : "未" ?></td>
