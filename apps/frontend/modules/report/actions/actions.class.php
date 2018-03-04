@@ -27,12 +27,7 @@ class reportActions extends sfActions
       $this->next = date('Ymd', strtotime($targetDate . ' + 1day'));
     }
 
-    $this->reports = Doctrine_Core::getTable('Report')
-      ->createQuery('r')
-      ->innerJoin('r.User u')
-      ->where('r.updated_at BETWEEN ? AND ?',
-        array(date('Y-m-d 00:00:00', strtotime($targetDate)), date('Y-m-d 23:59:59', strtotime($targetDate))))
-        ->execute();
+    $this->reports = Doctrine_Core::getTable('Report')->getTargetDateReports($targetDate);
 
     $this->users = Doctrine_Core::getTable('User')
       ->createQuery('u')

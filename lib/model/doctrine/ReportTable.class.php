@@ -16,4 +16,13 @@ class ReportTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Report');
     }
+
+    public function getTargetDateReports($targetDate) {
+      $query = Doctrine_Core::getTable('Report')
+        ->createQuery('r')
+        ->innerJoin('r.User u')
+        ->where('r.updated_at BETWEEN ? AND ?', array(date('Y-m-d 00:00:00', strtotime($targetDate)), date('Y-m-d 23:59:59', strtotime($targetDate))));
+
+      return $query->execute();
+    }
 }
