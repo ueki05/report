@@ -26,11 +26,18 @@ class ReportForm extends BaseReportForm
     ));
 
     // TODO: user_idの選択時に名前で選択できるようにする
-    $query = Doctrine_Core::getTable('User')
-      ->createQuery('q')
-      ->select('q.last_name, q.first_name');
-    $this->widgetSchema['user_id']  =  new sfWidgetFormDoctrineChoice(array(
-      'model' =>  'User',
+    $users = Doctrine_Core::getTable('User')
+      ->createQuery('u')
+      ->execute();
+
+    $userNames = array();
+    foreach ($users as $user) {
+      $userNames[] = sprintf('%s.%s', $user->getLastName(), $user->getFirstName());
+    }
+
+    $this->widgetSchema['user_id']  =  new sfWidgetFormChoice(array(
+      'choices' =>  $userNames,
+      'default' =>  $userNames[0],
     ));
 
     $this->widgetSchema['body'] = new sfWidgetFormTextarea(
