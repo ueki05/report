@@ -58,6 +58,7 @@ class reportActions extends sfActions
       ->fetchOne();
 
     $this->form = new ReportForm($report);
+    $this->form->setDefault('target_date', date('Y-m-d'));
   }
 
   public function executeShow(sfWebRequest $request)

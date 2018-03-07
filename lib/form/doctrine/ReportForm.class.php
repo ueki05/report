@@ -25,7 +25,7 @@ class ReportForm extends BaseReportForm
       'max' =>  date('Y-m-d'),
     ));
 
-    // TODO: user_idの選択時に名前で選択できるようにする
+    // 入力者の項目にユーザー名が表示されるよう設定
     $users = Doctrine_Core::getTable('User')
       ->createQuery('u')
       ->execute();
@@ -40,6 +40,7 @@ class ReportForm extends BaseReportForm
       'default' =>  $userNames[0],
     ));
 
+    // 本文のtextareaのサイズ設定
     $this->widgetSchema['body'] = new sfWidgetFormTextarea(
       array(),
       array('rows' => 40, 'cols' => 60)
