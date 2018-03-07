@@ -21,7 +21,7 @@
       <tr>
         <td><?php echo isset($showReport['report']) ? $i : "未" ?></td>
         <td><?php echo $showReport['user']->getLastName() . "." . $showReport['user']->getFirstName() ?></td>
-        <td><?php echo isset($showReport['report']) ? date('H:i:s', strtotime($showReport['report']->getUpdatedAt())) : "" ?></td>
+        <td><?php echo isset($showReport['report']) ? date('H:i:s', strtotime($showReport['report']->getUpdatedAt())) : "" ?> <?php echo link_to('編集', 'report_edit', array('id' => $showReport['report']->getId())) ?></td>
         <td><?php echo isset($showReport['report']) && $showReport['report']->getIsSent() == 1 ? "済" : "未" ?></td>
         <td><?php echo isset($showReport['report']) ? $showReport['report']->getBody() : "" ?></td>
       </tr>

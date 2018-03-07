@@ -32,12 +32,11 @@ class ReportForm extends BaseReportForm
 
     $userNames = array();
     foreach ($users as $user) {
-      $userNames[] = sprintf('%s.%s', $user->getLastName(), $user->getFirstName());
+      $userNames[$user->getId()] = sprintf('%s.%s', $user->getLastName(), $user->getFirstName());
     }
 
     $this->widgetSchema['user_id']  =  new sfWidgetFormChoice(array(
       'choices' =>  $userNames,
-      'default' =>  $userNames[0],
     ));
 
     // 本文のtextareaのサイズ設定
