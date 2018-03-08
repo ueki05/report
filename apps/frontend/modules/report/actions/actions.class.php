@@ -57,8 +57,20 @@ class reportActions extends sfActions
       ->orderBy('r2.updated_at DESC')
       ->fetchOne();
 
-    $this->form = new ReportForm($report);
+
+    // 同日のreportが既にあれば、
+    if ($report->getUpdatedAt() > date('Y-m-d 00:00:00')) {
+      $this->form = new ReportForm($report);
+    } else {
+      $this->form = new ReportForm();
+    }
     $this->form->setDefault('target_date', date('Y-m-d'));
+    $this->form->setDefault('body', $report->getBody());
+
+
+    // update
+    // 同日のreportが無ければ、
+    // new
   }
 
   public function executeShow(sfWebRequest $request)
