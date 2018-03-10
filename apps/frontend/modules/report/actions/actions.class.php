@@ -48,29 +48,17 @@ class reportActions extends sfActions
     }
     $this->showReports = $showReports;
 
-    $report = new Report();
-    $report->setTargetDate(date('Y-m-d'));
-
     $report = Doctrine_Core::getTable('Report')
       ->createQuery('r2')
       ->where('r2.user_id = ?', $loginUserId)
       ->orderBy('r2.updated_at DESC')
       ->fetchOne();
 
+    $this->form = new ReportForm();
 
-    // 同日のreportが既にあれば、
-    if ($report->getUpdatedAt() > date('Y-m-d 00:00:00')) {
-      $this->form = new ReportForm($report);
-    } else {
-      $this->form = new ReportForm();
-    }
     $this->form->setDefault('target_date', date('Y-m-d'));
     $this->form->setDefault('body', $report->getBody());
-
-
-    // update
-    // 同日のreportが無ければ、
-    // new
+    $this->form->setDefault('user_id', $report->getUserId());
   }
 
   public function executeShow(sfWebRequest $request)
