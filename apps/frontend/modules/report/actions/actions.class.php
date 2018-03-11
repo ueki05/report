@@ -27,11 +27,9 @@ class reportActions extends sfActions
       $this->next = date('Ymd', strtotime($targetDate . ' + 1day'));
     }
 
-    $this->reports = Doctrine_Core::getTable('Report')->getTargetDateReports($targetDate);
+    $this->reports = Doctrine_Core::getTable('Report')->getReportsByTargetDate($targetDate);
 
-    $this->users = Doctrine_Core::getTable('User')
-      ->createQuery('u')
-      ->execute();
+    $this->users = Doctrine_Core::getTable('User')->getUsers();
 
     $showReports = array();
 
@@ -48,11 +46,7 @@ class reportActions extends sfActions
     }
     $this->showReports = $showReports;
 
-    $report = Doctrine_Core::getTable('Report')
-      ->createQuery('r2')
-      ->where('r2.user_id = ?', $loginUserId)
-      ->orderBy('r2.updated_at DESC')
-      ->fetchOne();
+    $report = Doctrine_Core::getTable('Report')->getReportUserLatest($loginUserId);
 
     $this->form = new ReportForm();
 
