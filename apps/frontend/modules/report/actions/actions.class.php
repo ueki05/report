@@ -48,7 +48,7 @@ class reportActions extends sfActions
 
     $report = Doctrine_Core::getTable('Report')->getReportUserLatest($loginUserId);
 
-    $this->form = new ReportForm();
+    $this->form = new ReportForm($report);
 
     $this->form->setDefault('target_date', date('Y-m-d'));
     $this->form->setDefault('body', $report->getBody());
@@ -74,8 +74,6 @@ class reportActions extends sfActions
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-    $this->form = new ReportForm();
-
     $this->processForm($request, $this->form);
 
     $this->setTemplate('new');
@@ -91,7 +89,14 @@ class reportActions extends sfActions
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $this->forward404Unless($report = Doctrine_Core::getTable('Report')->find(array($request->getParameter('id'))), sprintf('Object report does not exist (%s).', $request->getParameter('id')));
-    $this->form = new ReportForm($report);
+
+    $postTargetDate = sprintf('%s-%02s-%02s', $_POST['report']['target_date']['year'], $_POST['report']['target_date']['month'], $_POST['report']['target_date']['day']);
+
+    if ($postTargetDate == $report->getTargetDate() && $_POST['report']['user_id'] == $report->getUserId()) {
+      $this->form = new ReportForm();
+    } else {
+      $this->form = new ReportForm($report);
+    }
 
     $this->processForm($request, $this->form);
 
