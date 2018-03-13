@@ -90,12 +90,20 @@ class reportActions extends sfActions
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $this->forward404Unless($report = Doctrine_Core::getTable('Report')->find(array($request->getParameter('id'))), sprintf('Object report does not exist (%s).', $request->getParameter('id')));
 
-    $postTargetDate = sprintf('%s-%02s-%02s', $_POST['report']['target_date']['year'], $_POST['report']['target_date']['month'], $_POST['report']['target_date']['day']);
+    $postReport = $_POST['report'];
+    $postTargetDate = sprintf('%s-%02s-%02s', $postReport['target_date']['year'], $postReport['target_date']['month'], $postReport['target_date']['day']);
 
-    if ($postTargetDate == $report->getTargetDate() && $_POST['report']['user_id'] == $report->getUserId()) {
-      $this->form = new ReportForm();
-    } else {
+    // fetchOneしてレコードがあればupdate, なければcreateにする
+    $record = Doctrine_Core::getTable('Report')
+      ->createQuery('q')
+      ->where('q.target_date = ?', $postTargetDate)
+      ->andWhere('q.user_id = ?', $postReport['user_id'])
+      ->fetchOne();
+
+    if ($record) {
       $this->form = new ReportForm($report);
+    } else {
+      $this->form = new ReportForm();
     }
 
     $this->processForm($request, $this->form);
