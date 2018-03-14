@@ -100,11 +100,13 @@ class reportActions extends sfActions
       ->andWhere('q.user_id = ?', $postReport['user_id'])
       ->fetchOne();
 
-    if ($record) {
+    // MEMO: 一旦登録できないので修正、ただどうすれば新規登録と更新を出し分けできるのかわからん
+    // 新規登録したいときid invalidになる
+    // if ($record) {
       $this->form = new ReportForm($report);
-    } else {
-      $this->form = new ReportForm();
-    }
+    // } else {
+    //   $this->form = new ReportForm();
+    // }
 
     $this->processForm($request, $this->form);
 
