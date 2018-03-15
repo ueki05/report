@@ -48,11 +48,15 @@ class reportActions extends sfActions
 
     $report = Doctrine_Core::getTable('Report')->getReportUserLatest($loginUserId);
 
-    $this->form = new ReportForm($report);
+    if ($report->getTargetDate() == date('Y-m-d')) {
+      $this->form = new ReportForm($report);
+    } else {
+      $this->form = new ReportForm();
+      $this->form->setDefault('target_date', date('Y-m-d'));
+      $this->form->setDefault('body', $report->getBody());
+      $this->form->setDefault('user_id', $report->getUserId());
+    }
 
-    $this->form->setDefault('target_date', date('Y-m-d'));
-    $this->form->setDefault('body', $report->getBody());
-    $this->form->setDefault('user_id', $report->getUserId());
   }
 
   public function executeShow(sfWebRequest $request)
@@ -73,6 +77,8 @@ class reportActions extends sfActions
   public function executeCreate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST));
+
+    $this->form = new ReportForm();
 
     $this->processForm($request, $this->form);
 
@@ -102,11 +108,11 @@ class reportActions extends sfActions
 
     // MEMO: 一旦登録できないので修正、ただどうすれば新規登録と更新を出し分けできるのかわからん
     // 新規登録したいときid invalidになる
-    // if ($record) {
+    if ($record) {
       $this->form = new ReportForm($report);
-    // } else {
-    //   $this->form = new ReportForm();
-    // }
+    } else {
+      $this->form = new ReportForm();
+    }
 
     $this->processForm($request, $this->form);
 
