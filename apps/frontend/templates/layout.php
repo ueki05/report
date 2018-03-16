@@ -17,6 +17,10 @@
 
       <div id="content">
         <div class="content">
+          <?php if ($sf_user->hasFlash('notice')): ?>
+            <div class="flash_notice"><?php echo $sf_user->getFlash('notice') ?></div>
+          <?php endif ?>
+
           <?php echo $sf_content ?>
         </div>
       </div>

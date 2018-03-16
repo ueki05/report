@@ -48,15 +48,10 @@ class reportActions extends sfActions
 
     $report = Doctrine_Core::getTable('Report')->getReportUserLatest($loginUserId);
 
-    if ($report->getTargetDate() == date('Y-m-d')) {
-      $this->form = new ReportForm($report);
-    } else {
-      $this->form = new ReportForm();
-      $this->form->setDefault('target_date', date('Y-m-d'));
-      $this->form->setDefault('body', $report->getBody());
-      $this->form->setDefault('user_id', $report->getUserId());
-    }
-
+    $this->form = new ReportForm();
+    $this->form->setDefault('target_date', date('Y-m-d'));
+    $this->form->setDefault('body', $report->getBody());
+    $this->form->setDefault('user_id', $report->getUserId());
   }
 
   public function executeShow(sfWebRequest $request)
@@ -76,13 +71,22 @@ class reportActions extends sfActions
 
   public function executeCreate(sfWebRequest $request)
   {
+    $postData = $this->getRequest()->getParameterHolder()->getAll();
+    $postTargetDate = sprintf('%s-%02s-%02s', $postData['report']['target_date']['year'], $postData['report']['target_date']['month'], $postData['report']['target_date']['day']);
+    $latestUserReport = Doctrine_Core::getTable('Report')->getReportUserLatest($postData['report']['user_id']);
+
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-    $this->form = new ReportForm();
-
-    $this->processForm($request, $this->form);
-
-    $this->setTemplate('new');
+    if ($postTargetDate != $latestUserReport['target_date']) {
+      $this->form = new ReportForm();
+      $this->processForm($request, $this->form);
+      $this->getUser()->setFlash('notice', sprintf('Saving failed. The report has already saved.'));
+      $this->setTemplate('new');
+    } else {
+      $this->form = new ReportForm();
+      $this->getUser()->setFlash('notice', sprintf('The report save succeeded.'));
+      $this->redirect('report/index');
+    }
   }
 
   public function executeEdit(sfWebRequest $request)
