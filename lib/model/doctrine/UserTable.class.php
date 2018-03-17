@@ -16,4 +16,11 @@ class UserTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('User');
     }
+
+    public static function getUsers()
+    {
+      return Doctrine_Core::getTable('User')
+        ->createQuery('u')
+        ->execute();
+    }
 }

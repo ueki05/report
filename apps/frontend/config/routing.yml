@@ -14,3 +14,6 @@ default_index:
 
 default:
   url:   /:module/:action/*
+
+report_edit:
+  url:   /report/edit/id/:id

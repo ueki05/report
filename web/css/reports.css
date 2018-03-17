@@ -1,0 +1,31 @@
+div#content-left {
+  float: left;
+  width: 50%;
+}
+
+div#content-right {
+  float: left;
+  width: 50%;
+}
+
+table#reports {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table#reports tr th,
+table#reports tr td {
+  padding: 5px 10px;
+  border: 1px solid #DDD;
+  vertical-align: middle;
+}
+
+table#reports tr th {
+  text-align: center;
+  font-weight: bold;
+}
+
+table#reports tr:nth-child(n+1):hover{
+  cursor: default;
+  background: #f2f2f2;
+}
