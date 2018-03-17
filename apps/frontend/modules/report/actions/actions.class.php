@@ -77,11 +77,12 @@ class reportActions extends sfActions
 
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-    // 当日のreportが既に登録済のときは、登録しない
+    // 当日のreportが未登録の場合、登録する
     if ($postTargetDate != $latestUserReport['target_date']) {
       $this->form = new ReportForm();
       $this->processForm($request, $this->form);
       $this->setTemplate('new');
+    // 当日のreportが登録済みの場合、登録する
     } else {
       $this->form = new ReportForm();
       $this->getUser()->setFlash('notice', sprintf('Saving failed. The report has already saved.'));
@@ -103,20 +104,7 @@ class reportActions extends sfActions
     $postReport = $_POST['report'];
     $postTargetDate = sprintf('%s-%02s-%02s', $postReport['target_date']['year'], $postReport['target_date']['month'], $postReport['target_date']['day']);
 
-    // fetchOneしてレコードがあればupdate, なければcreateにする
-    $record = Doctrine_Core::getTable('Report')
-      ->createQuery('q')
-      ->where('q.target_date = ?', $postTargetDate)
-      ->andWhere('q.user_id = ?', $postReport['user_id'])
-      ->fetchOne();
-
-    // MEMO: 一旦登録できないので修正、ただどうすれば新規登録と更新を出し分けできるのかわからん
-    // 新規登録したいときid invalidになる
-    if ($record) {
-      $this->form = new ReportForm($report);
-    } else {
-      $this->form = new ReportForm();
-    }
+    $this->form = new ReportForm($report);
 
     $this->processForm($request, $this->form);
 
