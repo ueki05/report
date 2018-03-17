@@ -77,14 +77,14 @@ class reportActions extends sfActions
 
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
+    // 当日のreportが既に登録済のときは、登録しない
     if ($postTargetDate != $latestUserReport['target_date']) {
       $this->form = new ReportForm();
       $this->processForm($request, $this->form);
-      $this->getUser()->setFlash('notice', sprintf('Saving failed. The report has already saved.'));
       $this->setTemplate('new');
     } else {
       $this->form = new ReportForm();
-      $this->getUser()->setFlash('notice', sprintf('The report save succeeded.'));
+      $this->getUser()->setFlash('notice', sprintf('Saving failed. The report has already saved.'));
       $this->redirect('report/index');
     }
   }
@@ -140,7 +140,7 @@ class reportActions extends sfActions
     if ($form->isValid())
     {
       $report = $form->save();
-
+      $this->getUser()->setFlash('notice', sprintf('The report save succeeded.'));
       $this->redirect('report/edit?id='.$report->getId());
     }
   }
