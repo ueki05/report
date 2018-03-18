@@ -14,8 +14,9 @@ generator:
     config:
       actions: ~
       fields:  ~
-      list:
+      list:    ~
       filter:  ~
-      form:    ~
-      edit:
-      new:
+      form:
+        class:  UserForm
+      edit:    ~
+      new:     ~

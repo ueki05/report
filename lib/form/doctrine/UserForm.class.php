@@ -12,5 +12,6 @@ class UserForm extends BaseUserForm
 {
   public function configure()
   {
+    $this->useFields(array('first_name', 'last_name', 'email'));
   }
 }
