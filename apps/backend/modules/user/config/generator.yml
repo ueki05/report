@@ -14,7 +14,9 @@ generator:
     config:
       actions: ~
       fields:  ~
-      list:    ~
+      list:
+        display:      [id, first_name, last_name, email]
+        max_per_page: 5
       filter:  ~
       form:
         class:  UserForm
