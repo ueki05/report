@@ -25,25 +25,39 @@ class ReportForm extends BaseReportForm
       'max' =>  date('Y-m-d'),
     ));
 
-    // 入力者の項目にユーザー名が表示されるよう設定
+    // user_idのカスタマイズ
     $users = Doctrine_Core::getTable('User')
       ->createQuery('u')
       ->execute();
 
     $userNames = array();
+    $userIds = array();
     foreach ($users as $user) {
       $userNames[$user->getId()] = sprintf('%s.%s', $user->getLastName(), $user->getFirstName());
+      $userIds[] = $user->getId();
     }
 
     $this->widgetSchema['user_id']  =  new sfWidgetFormChoice(array(
       'choices' =>  $userNames,
     ));
 
-    // 本文のtextareaのサイズ設定
+    $this->setValidator('user_id', new sfValidatorChoice(array(
+      'choices' => $userIds,
+    )));
+
+    // bodyのカスタマイズ
     $this->widgetSchema['body'] = new sfWidgetFormTextarea(
       array(),
       array('rows' => 40, 'cols' => 60)
     );
+    $this->validatorSchema['body'] = new sfValidatorString(array(
+      'min_length' => 10,
+      'max_length' => 255,
+    ), array(
+      'required'   => '入力が必須です',
+      'min_length' => '本文が短すぎます。最低10文字入力してください。',
+      'max_length' => '本文が長すぎます。最大255文字です。',
+    ));
 
     // formの各項目のラベルをカスタマイズ
     $this->widgetSchema->setLabels(array(
