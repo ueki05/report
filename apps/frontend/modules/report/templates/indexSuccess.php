@@ -23,7 +23,7 @@
         <td><?php echo $showReport['user']->getLastName() . "." . $showReport['user']->getFirstName() ?></td>
         <td><?php echo isset($showReport['report']) ? date('H:i:s', strtotime($showReport['report']->getUpdatedAt())) : "" ?> <?php echo isset($showReport['report']) ? link_to('編集', 'report_edit', array('id' => $showReport['report']->getId())) : '' ?></td>
         <td><?php echo isset($showReport['report']) && $showReport['report']->getIsSent() == 1 ? "済" : "未" ?></td>
-        <td><?php echo isset($showReport['report']) ? $showReport['report']->getBody() : "" ?></td>
+        <td><?php echo isset($showReport['report']) ? mb_strimwidth($showReport['report']->getBody(), 0, 18, '...', 'utf-8') : "" ?></td>
       </tr>
       <?php endforeach; ?>
     </tbody>
